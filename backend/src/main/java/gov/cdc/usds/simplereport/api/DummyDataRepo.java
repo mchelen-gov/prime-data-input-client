@@ -224,7 +224,7 @@ public class DummyDataRepo {
 		return defaultOrg.getId();
 	}
 
-	Patient getPatient(String patientId) {
+	public Patient getPatient(String patientId) {
 		for(Patient p : allPatients) {
 			if(p.getId().equals(patientId)) {
 				return p;
