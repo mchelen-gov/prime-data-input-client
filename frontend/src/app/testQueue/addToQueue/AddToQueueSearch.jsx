@@ -10,7 +10,7 @@ import { displayFullName } from "../../utils";
 
 const MIN_SEARCH_CHARACTER_COUNT = 3;
 
-const QUERY_PATIENT = gql`
+const QUERY_PATIENTS_AND_QUEUE = gql`
   {
     patients {
       internalId
@@ -19,6 +19,11 @@ const QUERY_PATIENT = gql`
       lastName
       middleName
       birthDate
+    }
+    queue {
+      patient {
+        internalId
+      }
     }
   }
 `;
@@ -50,7 +55,9 @@ const ADD_PATIENT_TO_QUEUE = gql`
 `;
 
 const AddToQueueSearchBox = ({ refetchQueue }) => {
-  const { data, loading, error } = useQuery(QUERY_PATIENT);
+  const { data, loading, error } = useQuery(QUERY_PATIENTS_AND_QUEUE, {
+    fetchPolicy: "cache-and-network",
+  });
   if (loading) {
     console.log("loading patient data for search");
   }
@@ -81,6 +88,10 @@ const AddToQueueSearchBox = ({ refetchQueue }) => {
           : false;
         return doesMatchPatientName || doesMatchLookupId;
       });
+      // See if any of these are in the queue
+      const inQueue = {};
+      data.queue.forEach((q) => (inQueue[q.patientId] = true));
+      searchResults.map((r) => ({ ...r, isInQueue: inQueue[r.patientId] }));
       return searchResults;
     }
     return [];
