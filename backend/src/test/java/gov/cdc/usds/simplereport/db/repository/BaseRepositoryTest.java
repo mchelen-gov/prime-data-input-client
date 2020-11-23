@@ -18,6 +18,9 @@ public abstract class BaseRepositoryTest {
 
 	@Autowired
 	private TestEntityManager _manager;
+	@Autowired
+	protected TestDataFactory _dataFactory;
+
 
 	protected void flush() {
 		_manager.flush();

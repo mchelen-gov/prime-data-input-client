@@ -34,6 +34,10 @@ public class ApiUser extends AuditedEntity {
 		lastSeen = new Date();
 	}
 
+	public ApiUser(Person p) {
+		this(p.getEmail(), p);
+	}
+
 	public String getLoginEmail() {
 		return loginEmail;
 	}

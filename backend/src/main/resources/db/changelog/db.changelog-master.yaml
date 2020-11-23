@@ -29,12 +29,6 @@ x-ref-data:
         constraints:
           nullable: false
 databaseChangeLog:
-  # This is a placeholder to make the thing parse, but also useful if we decide to use
-  # Spring Session JPA at some point.
-  - property:
-      name: attribute_bytes_type
-      value: BYTEA
-      dbms: postgresql
   - changeSet:
       id: define-enum-types
       author: bwarfield@cdc.gov
@@ -53,7 +47,7 @@ databaseChangeLog:
   - changeSet:
       id: initial-schema
       author: bwarfield@cdc.gov
-      comment: The database schema required for the initial prototype deployment of the Simple Report API.
+      comment: The database schema required for the initial deployment of the Simple Report API.
       changes:
         - createTable:
             tableName: api_user
@@ -217,6 +211,12 @@ databaseChangeLog:
               - column: *created_at_column
               - column: *updated_at_column
               - column: *soft_delete_column
+              - column:
+                  name: auto_generated
+                  type: boolean
+                  remarks: Flag for auto-generated Person records (excluded from patient listings).
+                  constraints:
+                    nullable: false
               - column:
                   name: organization_id
                   remarks: Foreign key to the facility/organization responsible for entering this person's information.

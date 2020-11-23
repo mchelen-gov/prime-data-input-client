@@ -35,6 +35,6 @@ public class TestDataFactory {
 	}
 
 	public Person createMinimalPerson(Organization org) {
-		return _personRepo.save(new Person("John", "Brown", "Boddie", "Jr.", org));
+		return _personRepo.save(new Person("John", "Brown", "Boddie", "Jr.", null, org));
 	}
 }
