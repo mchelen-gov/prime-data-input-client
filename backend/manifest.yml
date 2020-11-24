@@ -6,4 +6,4 @@ applications:
   memory: 768M
   stack: cflinuxfs3
   services:
-    - prime-simplereport-db
+    - simple-report-training-db
